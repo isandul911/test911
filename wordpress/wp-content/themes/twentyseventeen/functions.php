@@ -17,6 +17,16 @@ if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
 	return;
 }
 
+
+//function hide_admin_bar_from_front_end(){
+//	if (is_blog_admin()) {
+//		return true;
+//	}
+//	return false;
+//}
+//add_filter( 'show_admin_bar', 'hide_admin_bar_from_front_end' );
+
+
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -25,6 +35,17 @@ if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
  * as indicating support for post thumbnails.
  */
 function twentyseventeen_setup() {
+
+
+//	add_filter( 'wpmu_signup_user_notification', '__return_false' );
+
+	add_filter('wpmu_signup_user_notification', 'auto_activate_users', 10, 4);
+	function auto_activate_users($user, $user_email, $key, $meta){
+		wpmu_activate_signup($key);
+		return false;
+	}
+
+
 	/*
 	 * Make theme available for translation.
 	 * Translations can be filed at WordPress.org. See: https://translate.wordpress.org/projects/wp-themes/twentyseventeen
