@@ -396,6 +396,10 @@ function twentyseventeen_scripts() {
 	// Theme stylesheet.
 	wp_enqueue_style( 'twentyseventeen-style', get_stylesheet_uri() );
 
+	// bootstrap ver 3.3.7
+	wp_enqueue_style ( 'bootstrap-core',get_template_directory_uri()."/bootstrap/css/bootstrap.css",   array(), '3.3.7' );
+	wp_enqueue_script( 'bootstrap-core',get_template_directory_uri()."/bootstrap/js/bootstrap.min.js", array(), '3.3.7' );
+
 	// Load the dark colorscheme.
 	if ( 'dark' === get_theme_mod( 'colorscheme', 'light' ) || is_customize_preview() ) {
 		wp_enqueue_style( 'twentyseventeen-colors-dark', get_theme_file_uri( '/assets/css/colors-dark.css' ), array( 'twentyseventeen-style' ), '1.0' );
