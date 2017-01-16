@@ -1,2 +1,8 @@
 wordpress/wp-config.php
+.idea/.name
+.idea/misc.xml
+.idea/modules.xml
+.idea/pr_groups.iml
+.idea/vcs.xml
+.idea/workspace.xml
 wordpress/.htaccess
