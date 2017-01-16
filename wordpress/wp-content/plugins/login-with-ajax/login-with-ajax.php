@@ -505,6 +505,36 @@ class LoginWithAjax {
 		return $return;
 	}	
 }
+
+
+function lwa_before_registaration () {
+  // validate password
+  $args  = func_get_args();
+  $errors = $args[2];
+  $min_password_len = 6;
+
+  if (!isset($_POST['user_password'])) {
+     $errors->add('invalid_password','Password not set for signup');
+  } else {
+     $password = $_POST['user_password'];
+     if (strlen($password) < $min_password_len) {
+	     $errors->add('invalid_password',"Password too short. Must contain $min_password_len or more chars");
+     } else {
+       // another validation or all ok
+     }
+  } 
+}
+
+function lwa_new_user_registaration($user_id) {
+  // before validate 
+  $password = $_POST['user_password'];
+  wp_set_password( $password, $user_id);
+}
+
+// hooks for registration 
+add_action( 'register_post', "lwa_before_registaration", 10, 3);
+add_action( 'register_new_user', "lwa_new_user_registaration");
+
 //Set when to init this class
 add_action( 'init', 'LoginWithAjax::init' );
 add_action( 'widgets_init', 'LoginWithAjax::widgets_init' );

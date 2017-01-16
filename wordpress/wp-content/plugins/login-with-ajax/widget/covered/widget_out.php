@@ -21,10 +21,10 @@
 		Login
             </div>
             <div class="lwa-username-input">
-                <input type="text" name="log" placeholder="username or email" />
+                <input type="text" name="log" placeholder="Username or email.." />
             </div>
             <div class="lwa-password-input">
-                <input type="password" name="pwd" placeholder="password" />
+                <input type="password" name="pwd" placeholder="Password.." />
             <div>
             <div class="lwa-submit-button">
                         <input type="submit" name="wp-submit" id="lwa_wp-submit" value="<?php esc_attr_e('Log In', 'login-with-ajax'); ?>" tabindex="100" style="float:right" />
@@ -45,16 +45,16 @@
 	<div class="lwa-register lwa-register-default lwa-modal" style="display:none;">
 	<form class="lwa-form" action="<?php echo esc_attr(LoginWithAjax::$url_register); ?>" method="post">
 		<div class="lwa-form-title">
-			Create account
+			Signup
 		</div>
 		<div>
-			<input type="text" name="user_login" id="user_login" class="input" size="20" tabindex="10" placeholder="nick"/></label>
+			<input type="text" name="user_login" id="user_login" class="input" size="20" tabindex="10" placeholder="Nickname.."/></label>
 		</div>
 		<div>
-			<input type="text" name="user_email" id="user_email" class="input" size="25" tabindex="20" placeholder="e-mail"/>
+			<input type="text" name="user_email" id="user_email" class="input" size="25" tabindex="20" placeholder="E-mail.."/>
 		</div>
 		<div>
-			<input type="password" name="user_password" id="user_password" class="input" size="20" tabindex="30" placeholder="password" />
+			<input type="password" name="user_password" id="user_password" class="input" size="20" tabindex="30" placeholder="Password.." />
 		</div>
 		<div class="lwa-submit-button">
 			<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="<?php esc_attr_e('Next', 'login-with-ajax'); ?>" tabindex="100" style="float:right" />
