@@ -4952,6 +4952,60 @@ function bp_new_group_language() {
 	}
 
 
+
+function bp_new_group_games() {
+	echo bp_get_new_group_games();
+}
+
+	/**
+	 * @since 1.1.0
+	 *
+	 * @return mixed|void
+	 */
+	function bp_get_new_group_games() {
+		global $wpdb;
+
+        $get_games = $wpdb->get_results( "SELECT id, game FROM wp_gp_games" );
+//        $get_languages = $wpdb->get_results( "SELECT id, language FROM wp_gp_languages" );
+
+//		print_r($get_games);
+		/**
+		 * Filters the new game Array.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param string $get_games Game of the new games Array.
+		 */
+		return apply_filters( 'bp_get_new_group_games', $get_games );
+	}
+
+function bp_new_group_languages() {
+	echo bp_get_new_group_languages();
+}
+
+	/**
+	 * @since 1.1.0
+	 *
+	 * @return mixed|void
+	 */
+	function bp_get_new_group_languages() {
+		global $wpdb;
+
+//        $get_games = $wpdb->get_results( "SELECT id, game FROM wp_gp_games" );
+        $get_languages = $wpdb->get_results( "SELECT id, language FROM wp_gp_languages" );
+
+//		print_r($get_games);
+		/**
+		 * Filters the new game Array.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param string $get_games Game of the new games Array.
+		 */
+		return apply_filters( 'bp_get_new_group_games', $get_languages );
+	}
+
+
 /**
  * @since 1.1.0
  */

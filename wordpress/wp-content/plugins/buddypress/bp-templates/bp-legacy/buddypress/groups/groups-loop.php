@@ -10,18 +10,10 @@
 
 ?>
         <?php
-        function game_class($number = false)
-        {
-            $gameclassarray = array('rlgame', 'dota', 'lol', 'cs', 'ow');
-            return $gameclassarray[$number];
-        }
 
-        $bpgames = array('Rocket League', 'Dota2', 'League Of Legends', 'CS:GO', 'Overwatch');
-        $bplaguages = array('United States', 'Afghanistan', 'Algeria', 'Andorra', 'Argentina', 'Australia', 'Bahamas', 'Bahrain', 'Belize', 'Benin', 'Bolivia', 'Cambodia');
-
+        $gamesArray =  bp_get_new_group_games();
+        $languagesArray = bp_get_new_group_languages();
         ?>
-
-
 
                 <?php if (bp_has_groups($args)) : ?>
                     <div id="groups-list" class="item-list section group">
@@ -35,7 +27,7 @@
                                     </a>
 
                                     <div class="members">
-                                        0 / <?php bp_group_total_members($group = false); ?>
+                                         <?php bp_group_total_members($group = false); ?>
                                     </div>
                                 </div>
                                 <div class="item">
@@ -46,21 +38,19 @@
 
                                         $group_game_num = bp_group_game();
                                         $group_game_int = (int)$group_game_num;
-
-                                        $gamekey = array_search($group_game_int, $bpgames);
-                                        foreach($bpgames as $key => $value){
+                                        foreach($gamesArray as $key => $value){
                                             if($key === $group_game_int){
-                                                echo "<span class='group_game ". game_class($group_game_int)."'>" . $bpgames[$group_game_int] . "</span>";
+                                                echo "<span class='group_game rlgame'>" . $value->game . "</span>";
                                                 break;
                                             }
                                         }
 
                                         $group_language_num = bp_group_language();
                                         $group_language_int = (int)$group_language_num;
-                                        $languagekey = array_search($group_language_int, $bpgames);
-                                        foreach($bplaguages as $key => $value){
+
+                                        foreach($languagesArray as $key => $value){
                                             if($key === $group_game_int){
-                                                echo "<span class='group_language'>" . $bplaguages[$group_language_int] . "</span>";
+                                                echo "<span class='group_language'>" . $value->language . "</span>";
                                                 break;
                                             }
                                         }

@@ -4267,13 +4267,14 @@ body {
     float: left;
     background: #34384a;
     /*min-width: 353px;*/
-    width: 20%;
+    width: 18%;
     height: 100%;
+    position: relative;
 }
 
 .right_side_wrapper {
     float: left;
-    width: 80%;
+    width: 82%;
     background: #eeeeee;
 }
 
@@ -4511,7 +4512,7 @@ body {
     height: 14px;
 }
 
-.rlgame:before, .dota:before, .lol:before, .cs:before, .ow:before {
+.rlgame:before{
     content: "";
     background: url("images/lol_small_icon.png");
     width: 25px;
@@ -4595,16 +4596,16 @@ body {
     border: none;
 }
 
-.filters_item {
+.filters_games {
     width: 100%;
 }
 
-.filters_item ul {
+.filters_games ul {
     width: 924px;
     margin-top: 21px;
 }
 
-.filters_item ul li {
+.filters_games ul li {
     display: inline-block;
     list-style: none;
     height: 36px;
@@ -4616,7 +4617,12 @@ body {
     margin: 0 15px;
 }
 
-.filters_item ul li span{
+.filters_games ul li a{
+    text-decoration: none;
+    color: #3a3b4e;
+}
+
+.filters_games ul li span{
     position: relative;
     top: -9px;
 }
@@ -4656,29 +4662,46 @@ body {
     top: 2px;
 }
 
-.game_searchRL:before {
+.game_search1:before {
     content: "";
     background-position: -32px 0;
 }
 
-.game_searchD2:before {
+.game_search2:before {
     content: "";
     background-position: -64px 0;
 }
 
-.game_searchLOL:before {
+.game_search3:before {
     content: "";
     background-position: 0 -32px;
 }
 
-.game_searchSCGO:before {
+.game_search4:before {
     content: "";
     background-position: -32px -32px;
 }
 
-.game_searchOW:before {
+.game_search5:before {
     content: "";
     background-position: -64px -32px;;
+}
+
+.login_wrapper{
+    position: absolute;
+    bottom: 0;
+}
+
+.language_wrapper{
+    width: 208px;
+    padding-top: 30px;
+    margin: 0 auto;
+}
+
+.rank_wrapper{
+    width: 400px;
+    padding-top: 30px;
+    margin: 0 auto;
 }
 
 

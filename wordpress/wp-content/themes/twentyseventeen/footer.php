@@ -27,7 +27,7 @@
         </ul>
     </div>
 <?php
-    get_sidebar();
+//    get_sidebar();
 ?>
 </footer>
 

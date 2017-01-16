@@ -88,22 +88,22 @@ do_action('bp_before_create_group_page'); ?>
 
                     <?php bp_new_group_game(); ?>
 
+
+
                     <?php
-                    $bpgames = array(
-                        "0" => 'Rocket League',
-                        "1" => 'Dota2',
-                        "2" => 'League Of Legends',
-                        "3" => 'CS:GO',
-                        "4" => 'Overwatch',
-                    );
+
+                    $gamesArray =  bp_get_new_group_games();
+                    $languagesArray = bp_get_new_group_languages();
+
                     ?>
 
                     <select name="group-game" size="1">
-                        <option value=""></option>
+<!--                        <option value=""></option>-->
                         <?php
-                        foreach ($bpgames as $key => $value):
-                            echo '<option value="' . $key . '">' . $value . '</option>'; //close your tags!!
-                        endforeach;
+                        foreach ($gamesArray as $key => $value){
+                            echo '<option value="' . $value->id . '">' . $value->game . '</option>';
+                        }
+
                         ?>
                     </select>
 
@@ -115,29 +115,12 @@ do_action('bp_before_create_group_page'); ?>
                     <?php bp_new_group_language(); ?>
 
 
-                    <?php
-                    $bplaguages = array(
-                        "0" => 'United States',
-                        "1" => 'Afghanistan',
-                        "2" => 'Algeria',
-                        "3" => 'Andorra',
-                        "4" => 'Argentina',
-                        "5" => 'Australia',
-                        "6" => 'Bahamas',
-                        "7" => 'Bahrain',
-                        "8" => 'Belize',
-                        "9" => 'Benin',
-                        "10" => 'Bolivia',
-                        "11" => 'Cambodia',
-                    );
-                    ?>
-
                     <select name="group-language" size="1">
-                        <option value=""></option>
+<!--                        <option value=""></option>-->
                         <?php
-                        foreach ($bplaguages as $key => $value):
-                            echo '<option value="' . $key . '">' . $value . '</option>'; //close your tags!!
-                        endforeach;
+                        foreach ($languagesArray as $key => $value) {
+                            echo '<option value="' . $value->id . '">' . $value->language . '</option>'; //close your tags!!
+                        }
                         ?>
                     </select>
 
