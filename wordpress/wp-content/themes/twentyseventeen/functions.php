@@ -18,13 +18,14 @@ if ( version_compare( $GLOBALS['wp_version'], '4.7-alpha', '<' ) ) {
 }
 
 
-//function hide_admin_bar_from_front_end(){
-//	if (is_blog_admin()) {
-//		return true;
-//	}
-//	return false;
-//}
-//add_filter( 'show_admin_bar', 'hide_admin_bar_from_front_end' );
+
+function hide_admin_bar_from_front_end(){
+	if (is_blog_admin()) {
+		return true;
+	}
+	return false;
+}
+add_filter( 'show_admin_bar', 'hide_admin_bar_from_front_end' );
 
 
 /**
