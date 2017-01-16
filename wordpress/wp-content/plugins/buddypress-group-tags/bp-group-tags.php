@@ -445,52 +445,52 @@ function gtags_make_tags_for_group() {
 // good 2.8 widget resource http://justintadlock.com/archives/2009/05/26/the-complete-guide-to-creating-widgets-in-wordpress-28
 
 // create a nice new widget class
-//class GTags_Widget extends WP_Widget {
-//	function GTags_Widget() {
-//		$widget_ops = array( 'classname' => 'gtags', 'description' => 'Show a tag cloud for Group Tags' );
-//		$control_ops = array( 'id_base' => 'gtags-widget' );
-//		$this->WP_Widget( 'gtags-widget', 'Group Tags', $widget_ops, $control_ops );
-//	}
-//
-//	function widget( $args, $instance ) {
-//		extract( $args );
-//		$title = apply_filters('widget_title', $instance['title'] );
-//		echo $before_widget;
-//
-//		if ( $title )
-//			echo $before_title . $title . $after_title;
-//
-//		echo '<div class="gtags gtags-widget">';
-//		echo wp_generate_tag_cloud( gtags_make_tags( null, $instance['exclude'], $instance['include'] ), gtags_cloud_args() );
-//		echo '</div>';
-//		echo $after_widget;
-//	}
-//
-//	function update( $new_instance, $old_instance ) {
-//		$instance = $old_instance;
-//		$instance['title'] = strip_tags( $new_instance['title'] );
-//		$instance['exclude'] = $new_instance['exclude'];
-//		$instance['include'] = $new_instance['include'];
-//		return $instance;
-//	}
-//
-//	function form( $instance ) {
-//		$defaults = array( 'title' => __('Group Tags', 'gtags') );
-//		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
-<!--		<p><label>Title:<input name="--><?php //echo $this->get_field_name( 'title' ); ?><!--" value="--><?php //echo $instance['title']; ?><!--" style="width:100%;" /></label>-->
-<!--		<p><label><b>Exclude</b> these group tags:<textarea name="--><?php //echo $this->get_field_name( 'exclude' ); ?><!--" style="width:100%;">--><?php //echo $instance['exclude']; ?><!--</textarea></label>-->
-<!--		<p><b>OR</b></p>-->
-<!--		<p><label> <b>Include</b> these group tags:<textarea name="--><?php //echo $this->get_field_name( 'include' ); ?><!--" style="width:100%;">--><?php //echo $instance['include']; ?><!--</textarea></label>-->
-<!--		--><?php
-//	}
-//
-//}
-//
-//function gtags_load_widgets() {
-//	register_widget('GTags_Widget');
-//	register_widget('GTags_Activity_Widget');
-//}
-//add_action( 'widgets_init', 'gtags_load_widgets' );
+class GTags_Widget extends WP_Widget {
+	function GTags_Widget() {
+		$widget_ops = array( 'classname' => 'gtags', 'description' => 'Show a tag cloud for Group Tags' );
+		$control_ops = array( 'id_base' => 'gtags-widget' );
+		$this->WP_Widget( 'gtags-widget', 'Group Tags', $widget_ops, $control_ops );
+	}
+
+	function widget( $args, $instance ) {
+		extract( $args );
+		$title = apply_filters('widget_title', $instance['title'] );
+		echo $before_widget;
+
+		if ( $title )
+			echo $before_title . $title . $after_title;
+
+		echo '<div class="gtags gtags-widget">';
+		echo wp_generate_tag_cloud( gtags_make_tags( null, $instance['exclude'], $instance['include'] ), gtags_cloud_args() );
+		echo '</div>';
+		echo $after_widget;
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['exclude'] = $new_instance['exclude'];
+		$instance['include'] = $new_instance['include'];
+		return $instance;
+	}
+
+	function form( $instance ) {
+		$defaults = array( 'title' => __('Group Tags', 'gtags') );
+		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
+		<p><label>Title:<input name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" /></label>
+		<p><label><b>Exclude</b> these group tags:<textarea name="<?php echo $this->get_field_name( 'exclude' ); ?>" style="width:100%;"><?php echo $instance['exclude']; ?></textarea></label>
+		<p><b>OR</b></p>
+		<p><label> <b>Include</b> these group tags:<textarea name="<?php echo $this->get_field_name( 'include' ); ?>" style="width:100%;"><?php echo $instance['include']; ?></textarea></label>
+		<?php
+	}
+
+}
+
+function gtags_load_widgets() {
+	register_widget('GTags_Widget');
+	register_widget('GTags_Activity_Widget');
+}
+add_action( 'widgets_init', 'gtags_load_widgets' );
 
 
 

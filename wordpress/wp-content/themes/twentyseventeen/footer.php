@@ -26,6 +26,9 @@
             <li>Privacy Policy</li>
         </ul>
     </div>
+<?php
+    get_sidebar();
+?>
 </footer>
 
 <script>
