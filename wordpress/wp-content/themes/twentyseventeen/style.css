@@ -4278,6 +4278,16 @@ body {
     background: #eeeeee;
 }
 
+.left_side_wrapper_custom {
+    float: left;
+    width: 80%;
+}
+
+.right_side_wrapper_custom {
+    float: right;
+    width: 20%;
+}
+
 .right_side_wrapper .header {
     background: url("images/header.jpg");
     background-repeat: no-repeat;

@@ -1,0 +1,17 @@
+/* Default theme CSS */
+.item__avatar {
+    border-radius: 50%;
+}
+.wcControls input[type="button"] {
+    font-size: 1.0em !important;
+    padding: 0.1em !important;
+}
+.left_col {
+    float: left;
+    width: 20%;
+}
+
+.right_col {
+    float: right;
+    width: 45%;
+}
