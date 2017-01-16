@@ -9,6 +9,7 @@
  */
 
 ?>
+
         <?php
 
         $gamesArray =  bp_get_new_group_games();

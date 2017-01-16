@@ -103,8 +103,8 @@ function groups_create_group( $args = '' ) {
 		'creator_id'   => 0,
 		'name'         => '',
 		'description'  => '',
-		'game'  => '',
-		'language'  => '',
+		'game_id'  => '',
+		'language_id'  => '',
 		'slug'         => '',
 		'status'       => 'public',
 		'parent_id'    => 0,
@@ -119,8 +119,8 @@ function groups_create_group( $args = '' ) {
 	if ( ! empty( $group_id ) ) {
 		$group = groups_get_group( $group_id );
 		$name  = ! empty( $name ) ? $name : $group->name;
-		$game  = ! empty( $game ) ? $game : $group->game;
-		$language  = ! empty( $language ) ? $language : $group->language;
+		$game_id  = ! empty( $game_id ) ? $game_id : $group->game_id;
+		$language_id  = ! empty( $language_id ) ? $language_id : $group->language_id;
 		$name  = ! empty( $name ) ? $name : $group->name;
 		$slug  = ! empty( $slug ) ? $slug : $group->slug;
 		$description = ! empty( $description ) ? $description : $group->description;
@@ -155,8 +155,8 @@ function groups_create_group( $args = '' ) {
 	// Set group name.
 	$group->name         = $name;
 	$group->description  = $description;
-	$group->language  = $language;
-	$group->game  = $game;
+	$group->language_id  = $language_id;
+	$group->game_id  = $game_id;
 	$group->slug         = $slug;
 	$group->status       = $status;
 	$group->parent_id    = $parent_id;
@@ -241,8 +241,8 @@ function groups_edit_base_group_details( $group_id, $group_name, $group_desc, $n
 	$old_group = clone $group;
 
 	$group->name        = $group_name;
-//	$group->language        = $group_language;
-//	$group->game        = $group_game;
+	$group->language_id        = $group_language_id;
+	$group->game_id        = $group_game_id;
 	$group->description = $group_desc;
 
 	if ( !$group->save() )

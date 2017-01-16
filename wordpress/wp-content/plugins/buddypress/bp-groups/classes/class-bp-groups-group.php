@@ -48,7 +48,7 @@ class BP_Groups_Group {
 	 * @since 1.6.0
 	 * @var string
 	 */
-	public $language;
+	public $language_id;
 
 	/**
 	 * game of the group.
@@ -56,7 +56,7 @@ class BP_Groups_Group {
 	 * @since 1.6.0
 	 * @var string
 	 */
-	public $game;
+	public $game_id;
 
 
 	/**
@@ -233,8 +233,8 @@ class BP_Groups_Group {
 		$this->id           = (int) $group->id;
 		$this->creator_id   = (int) $group->creator_id;
 		$this->name         = stripslashes( $group->name );
-		$this->game    = stripslashes( $group->game );
-		$this->language    = stripslashes( $group->language );
+		$this->game_id    = stripslashes( $group->game_id );
+		$this->language_id    = stripslashes( $group->language_id );
 		$this->slug         = $group->slug;
 		$this->description  = stripslashes( $group->description );
 		$this->status       = $group->status;
@@ -257,8 +257,8 @@ class BP_Groups_Group {
 
 		$this->creator_id   = apply_filters( 'groups_group_creator_id_before_save',   $this->creator_id,   $this->id );
 		$this->name         = apply_filters( 'groups_group_name_before_save',         $this->name,         $this->id );
-		$this->game         = apply_filters( 'groups_group_game_before_save',    $this->game,         $this->id );
-		$this->language         = apply_filters( 'groups_group_language _before_save',    $this->language,         $this->id );
+		$this->game_id         = apply_filters( 'groups_group_game_before_save',    $this->game_id,         $this->id );
+		$this->language_id         = apply_filters( 'groups_group_language _before_save',    $this->language_id,         $this->id );
 		$this->slug         = apply_filters( 'groups_group_slug_before_save',         $this->slug,         $this->id );
 		$this->description  = apply_filters( 'groups_group_description_before_save',  $this->description,  $this->id );
 		$this->status       = apply_filters( 'groups_group_status_before_save',       $this->status,       $this->id );
@@ -302,8 +302,8 @@ class BP_Groups_Group {
 				"UPDATE {$bp->groups->table_name} SET
 					creator_id = %d,
 					name = %s,
-					game = %s,
-					language = %s,
+					game_id = %s,
+					language_id = %s,
 					slug = %s,
 					description = %s,
 					status = %s,
@@ -315,8 +315,8 @@ class BP_Groups_Group {
 				",
 					$this->creator_id,
 					$this->name,
-					$this->game,
-					$this->language,
+					$this->game_id,
+					$this->language_id,
 					$this->slug,
 					$this->description,
 					$this->status,
@@ -330,8 +330,8 @@ class BP_Groups_Group {
 				"INSERT INTO {$bp->groups->table_name} (
 					creator_id,
 					name,
-					game,
-					language,
+					game_id,
+					language_id,
 					slug,
 					description,
 					status,
@@ -343,8 +343,8 @@ class BP_Groups_Group {
 				)",
 					$this->creator_id,
 					$this->name,
-					$this->game,
-					$this->language,
+					$this->game_id,
+					$this->language_id,
 					$this->slug,
 					$this->description,
 					$this->status,
