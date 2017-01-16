@@ -17,8 +17,11 @@
 
 get_header(); ?>
 
+
+
 <div class="right_side_wrapper">
-	<div id="primary" class="content-area">
+        
+	<div id="primary" class="content-area left_side_wrapper_custom">
 		<main id="main" class="site-main" role="main">
 
 			<?php
@@ -34,6 +37,14 @@ get_header(); ?>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
+    
+    <div class="right_side_wrapper_custom">
+        <?php 
+            $this_id = bp_get_group_id();
+            echo do_shortcode( '[wise-chat chat_height=700px show_powered_by=0 read_only_for_anonymous=1'
+            . ' show_message_submit_button=1 text_size=11px channel=' . $this_id . ']' ); ?>
+    </div>
+    
 </div><!-- .wrap -->
 
 
