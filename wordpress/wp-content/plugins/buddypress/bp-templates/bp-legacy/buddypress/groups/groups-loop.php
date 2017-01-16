@@ -9,139 +9,96 @@
  */
 
 ?>
+        <?php
+        function game_class($number = false)
+        {
+            $gameclassarray = array('rlgame', 'dota', 'lol', 'cs', 'ow');
+            return $gameclassarray[$number];
+        }
 
-<?php
+        $bpgames = array('Rocket League', 'Dota2', 'League Of Legends', 'CS:GO', 'Overwatch');
+        $bplaguages = array('United States', 'Afghanistan', 'Algeria', 'Andorra', 'Argentina', 'Australia', 'Bahamas', 'Bahrain', 'Belize', 'Benin', 'Bolivia', 'Cambodia');
 
-/**
- * Fires before the display of groups from the groups loop.
- *
- * @since 1.2.0
- */
-do_action( 'bp_before_groups_loop' ); ?>
+        ?>
 
-<?php if ( bp_get_current_group_directory_type() ) : ?>
-	<p class="current-group-type"><?php bp_current_group_directory_type_message() ?></p>
-<?php endif; ?>
 
-<?php if ( bp_has_groups( bp_ajax_querystring( 'groups' ) ) ) : ?>
 
-	<div id="pag-top" class="pagination">
+                <?php if (bp_has_groups($args)) : ?>
+                    <div id="groups-list" class="item-list section group">
+                        <?php while (bp_groups()) : bp_the_group(); ?>
+                            <div class="col span_1_of_3">
+                                <div class="item-avatar">
+                                    <div
+                                        class="group_avatar"><?php bp_group_avatar('type=full&width=50&height=50') ?></div>
+                                    <a href="<?php bp_group_permalink() ?>" class="item-avatar-hover">
+                                        <span class="joinGroupAvatar">Join Group</span>
+                                    </a>
 
-		<div class="pag-count" id="group-dir-count-top">
+                                    <div class="members">
+                                        0 / <?php bp_group_total_members($group = false); ?>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-title"><?php bp_group_name() ?></div>
 
-			<?php bp_groups_pagination_count(); ?>
+                                    <div class="group_custom_fields">
+                                        <?php
 
-		</div>
+                                        $group_game_num = bp_group_game();
+                                        $group_game_int = (int)$group_game_num;
 
-		<div class="pagination-links" id="group-dir-pag-top">
+                                        $gamekey = array_search($group_game_int, $bpgames);
+                                        foreach($bpgames as $key => $value){
+                                            if($key === $group_game_int){
+                                                echo "<span class='group_game ". game_class($group_game_int)."'>" . $bpgames[$group_game_int] . "</span>";
+                                                break;
+                                            }
+                                        }
 
-			<?php bp_groups_pagination_links(); ?>
+                                        $group_language_num = bp_group_language();
+                                        $group_language_int = (int)$group_language_num;
+                                        $languagekey = array_search($group_language_int, $bpgames);
+                                        foreach($bplaguages as $key => $value){
+                                            if($key === $group_game_int){
+                                                echo "<span class='group_language'>" . $bplaguages[$group_language_int] . "</span>";
+                                                break;
+                                            }
+                                        }
 
-		</div>
+                                        ?>
+                                        <div class="clearfix"></div>
 
-	</div>
+                                    </div>
 
-	<?php
+                                    <div class="tags">
+                                        <?php
+                                        $group = false;
+                                        $gtags = explode(',', gtags_get_group_tags($group));
+                                        $tagArray = array();
+                                        $result = count($gtags);
+                                        //							echo $result;
+                                        $index = 0;
+                                        foreach ($gtags as $key => $value) {
+                                            $index++;
+                                            if ($index <= 4) {
+                                                echo "<span>" . $gtags[$key] . "</span>";
+                                            }
+                                        }
+                                        echo "<div class='clearfix'></div>"
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="action">
+                                    <?php bp_group_join_button() ?>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        <?php endwhile; ?>
+                    </div>
+                    <?php do_action('bp_after_groups_loop') ?>
+                <?php else: ?>
+                    <div id="message" class="info">
+                        <p><?php _e('There were no groups found.', 'buddypress') ?></p>
+                    </div>
 
-	/**
-	 * Fires before the listing of the groups list.
-	 *
-	 * @since 1.1.0
-	 */
-	do_action( 'bp_before_directory_groups_list' ); ?>
-
-	<ul id="groups-list" class="item-list" aria-live="assertive" aria-atomic="true" aria-relevant="all">
-
-	<?php while ( bp_groups() ) : bp_the_group(); ?>
-
-		<li <?php bp_group_class(); ?>>
-			<?php if ( ! bp_disable_group_avatar_uploads() ) : ?>
-				<div class="item-avatar">
-					<a href="<?php bp_group_permalink(); ?>"><?php bp_group_avatar( 'type=thumb&width=50&height=50' ); ?></a>
-				</div>
-			<?php endif; ?>
-
-			<div class="item">
-				<div class="item-title"><a href="<?php bp_group_permalink(); ?>"><?php bp_group_name(); ?></a></div>
-				<div class="item-meta"><span class="activity" data-livestamp="<?php bp_core_iso8601_date( bp_get_group_last_active( 0, array( 'relative' => false ) ) ); ?>"><?php printf( __( 'active %s', 'buddypress' ), bp_get_group_last_active() ); ?></span></div>
-
-				<div class="item-desc"><?php bp_group_description_excerpt(); ?></div>
-
-				<?php
-
-				/**
-				 * Fires inside the listing of an individual group listing item.
-				 *
-				 * @since 1.1.0
-				 */
-				do_action( 'bp_directory_groups_item' ); ?>
-
-			</div>
-
-			<div class="action">
-
-				<?php
-
-				/**
-				 * Fires inside the action section of an individual group listing item.
-				 *
-				 * @since 1.1.0
-				 */
-				do_action( 'bp_directory_groups_actions' ); ?>
-
-				<div class="meta">
-
-					<?php bp_group_type(); ?> / <?php bp_group_member_count(); ?>
-
-				</div>
-
-			</div>
-
-			<div class="clear"></div>
-		</li>
-
-	<?php endwhile; ?>
-
-	</ul>
-
-	<?php
-
-	/**
-	 * Fires after the listing of the groups list.
-	 *
-	 * @since 1.1.0
-	 */
-	do_action( 'bp_after_directory_groups_list' ); ?>
-
-	<div id="pag-bottom" class="pagination">
-
-		<div class="pag-count" id="group-dir-count-bottom">
-
-			<?php bp_groups_pagination_count(); ?>
-
-		</div>
-
-		<div class="pagination-links" id="group-dir-pag-bottom">
-
-			<?php bp_groups_pagination_links(); ?>
-
-		</div>
-
-	</div>
-
-<?php else: ?>
-
-	<div id="message" class="info">
-		<p><?php _e( 'There were no groups found.', 'buddypress' ); ?></p>
-	</div>
-
-<?php endif; ?>
-
-<?php
-
-/**
- * Fires after the display of groups from the groups loop.
- *
- * @since 1.2.0
- */
-do_action( 'bp_after_groups_loop' ); ?>
+                <?php endif; ?>

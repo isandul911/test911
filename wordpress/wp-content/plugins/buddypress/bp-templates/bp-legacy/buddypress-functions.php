@@ -136,6 +136,7 @@ class BP_Legacy extends BP_Theme_Compat {
 			'blogs_filter'    => 'bp_legacy_theme_object_template_loader',
 			'forums_filter'   => 'bp_legacy_theme_object_template_loader',
 			'groups_filter'   => 'bp_legacy_theme_object_template_loader',
+			'get_groups_by_tags' => 'bp_legacy_theme_object_template_loader',
 			'members_filter'  => 'bp_legacy_theme_object_template_loader',
 			'messages_filter' => 'bp_legacy_theme_messages_template_loader',
 			'invite_filter'   => 'bp_legacy_theme_invite_template_loader',

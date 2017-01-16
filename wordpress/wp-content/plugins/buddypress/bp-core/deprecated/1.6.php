@@ -229,6 +229,7 @@ if ( !function_exists( 'bp_dtheme_register_actions' ) ) :
 			// Directory template loaders
 			'members_filter',
 			'groups_filter',
+                        'get_groups_by_tags',
 			'blogs_filter',
 			'forums_filter',
 			'messages_filter',

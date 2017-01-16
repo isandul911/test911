@@ -1,7 +1,21 @@
-
 #gtags-results { margin-bottom:10px; font-size:140%; }
 #gtags-results+#pag-top { display: none; }
 #gtags-top { width:69%; }
+/* #gtags-top { width:69%; border: solid 1px red; padding: 100px; } */
+#gtags-top-cloud .btn.selected {color:#FF0000}
+#gtags-top-cloud .btn.loading {
+    background-image: url( ../buddypress-group-tags/images/ajax-loader.gif );
+    background-position: 95% 50%;
+    background-repeat: no-repeat;
+    padding-right: 25px;
+}
+#gtags-top-cloud .btn.loading:hover {
+    background-image: url( ../buddypress-group-tags/images/ajax-loader.gif );
+    background-position: 95% 50%;
+    background-repeat: no-repeat;
+    padding-right: 25px;
+    color: #777;
+}
 /* #gtags-top-cloud { display: none; } */
 #gtags-toggle-top { font-weight: bold; }
 .gtags-add { color: #1FB3DD; text-decoration: underline; margin-left: 2px;} 

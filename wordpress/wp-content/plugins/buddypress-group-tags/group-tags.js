@@ -1,11 +1,25 @@
 jQuery(document).ready( function() {
 	var j = jQuery;
 
+	j('#gtags-top-cloud .btn').click( function(event) {
+		j(event.target).toggleClass('selected');
+		tags = [];
+		j('#gtags-top-cloud .btn.selected').each( function() {
+			 tags.push(j(this).text());
+		});
+		// j(event.target).addClass('loading');
+		j.post( ajaxurl, { action: 'get_groups_by_tags', 'tags': tags , 'object' : 'groups' },
+			function(response) {
+				j('.content_groups_wrapper').html(response);
+				//j('#groups-dir-list').html(response);
+				// j(event.target).removeClass('loading');
+			});		
+		return false;
+	});
+
 	// ajax code to quick show tag group results
 	j('#groups-directory-form .gtags a').click( function(event) {
 		tag = j(event.target).text();
-
-		console.log("dsfasadf");
 		j(event.target).addClass('loading');
 		j('input#groups_search').val('').focus().blur();
 		
@@ -34,7 +48,7 @@ jQuery(document).ready( function() {
 	j('#gtags-toggle-top').click(function() {
 		j('#gtags-top-cloud').show();
 		j('#gtags-toggle-top').hide();
-	})
+	});
 
 });
 

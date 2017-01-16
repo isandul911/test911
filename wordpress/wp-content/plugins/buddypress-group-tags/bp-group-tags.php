@@ -74,30 +74,49 @@ function gtags_ajax() {
 	locate_template( array( "groups/groups-loop.php" ), true );
 	die;
 }
+
 add_action( 'wp_ajax_gtags', 'gtags_ajax' );
 add_action( 'wp_ajax_nopriv_gtags', 'gtags_ajax' );
-
 
 
 // hook into group listing function, output the groups that match a given tag 
 function gtags_show_groups_for_tag( $groups ) {
 	global $bp, $groups_template, $gtags_done;
 
-	/*echo '<pre>ajax_querystring: '; print_r( $bp->ajax_querystring ); echo '</pre>';
-	echo '<pre>current_action: '; print_r( $bp->current_action ); echo '</pre>';
-	echo '<pre>POST: '; print_r( $_POST ); echo '</pre>';*/
+	// echo '<pre>ajax_querystring: '; print_r( $bp->ajax_querystring ); echo '</pre>';
+	// echo '<pre>current_action: '; print_r( $bp->current_action ); echo '</pre>';
+	// echo '<pre>POST: '; print_r( $_POST ); echo '</pre>';
 	
 	if ( isset( $_POST['action'] ) && $_POST['action'] == 'groups_filter' || isset( $_POST['groups_search_submit'] ) && $_POST['groups_search_submit'] == 'Search' || $gtags_done )
 		return $groups;
-			
+
 	if ( isset( $_POST['tag'] ) && $_POST['tag'] )
 		$tag = urldecode( $_POST['tag'] ); // this is what ajax sends if we are in group directory
+	else if ( isset( $_POST['tags'] ) && $_POST['tags'] )
+		$tag = $_POST['tags']; // this is what ajax sends if we are in group directory
 	else if ( $bp->current_action == 'tag' )
 		$tag = urldecode( $bp->action_variables[0] ); // this is for the widget from all other places
-			
+
 	if ( isset( $tag ) && $tag ) {
-		echo '<div id="gtags-results">'.__('Results for tag', 'gtags').': <b>' . stripslashes( $tag ) . '</b></div>';
-		$gtags_groups = gtags_get_groups_by_tag( null, null, false, false, $tag );
+		if(is_array($tag)) {
+			// echo '<div id="gtags-results">'.__('Results for tag', 'gtags').': <b>' . stripslashes( implode(", ", $tag) ) . '</b></div>';
+
+			$gtags_groups = array( 'groups' => array(), 'total' => 0 );
+			foreach( $tag as $key => $value ) {
+				$groups = gtags_get_groups_by_tag( null, null, false, false, $value );
+				if($groups['total'] > 0) {
+					foreach( $groups['groups'] as $group ) {
+						if (!in_array($group, $gtags_groups['groups'])) {
+							$gtags_groups['groups'][] = $group;
+							$gtags_groups['total'] = $gtags_groups['total'] + 1; 
+						}
+					}
+				}
+			}
+		} else {
+			echo '<div id="gtags-results">'.__('Results for tag', 'gtags').': <b>' . stripslashes( $tag ) . '</b></div>';
+			$gtags_groups = gtags_get_groups_by_tag( null, null, false, false, $tag );
+		}
 		$groups_template->groups = $gtags_groups['groups'];
 		// turn off pagination 
 		$groups_template->group_count = $gtags_groups['total'];
@@ -110,7 +129,7 @@ function gtags_show_groups_for_tag( $groups ) {
 
 //	echo '<br><pre> : '; print_r( $groups ); echo '</pre>';
 	//echo '<pre>'; print_r( $bp->current_action ); echo '</pre>';
-	//echo '<pre>'; print_r( $bp->action_variables[0] ); echo '</pre>';
+	// echo '<pre>'; print_r( $bp->action_variables ); echo '</pre>';
 	
 	$gtags_done = true; // only run it once, so that the widgets function shows normal groups, not tags.
 	return $groups;
@@ -136,7 +155,20 @@ function gtags_get_groups_by_tag( $limit = null, $page = null, $user_id = false,
 		$search_terms = like_escape( $wpdb->escape( $search_terms ) );
 		$search_sql = " AND ( g.name LIKE '%%{$search_terms}%%' OR g.description LIKE '%%{$search_terms}%%' )";
 	}
-
+/*
+	$game_id = get_option('_______________game_id'); 
+	if(isset($game_id)) {
+		$search_sql .= " AND ( g.game_id = $game_id )";
+	}
+	$rank_id = get_option('_______________rank_id'); 
+	if(isset($rank_id)) {
+		$search_sql .= " AND ( g.rank_id = $rank_id )";
+	}
+	$lang_id = get_option('_______________lang_id'); 
+	if(isset($rank_id)) {
+		$search_sql .= " AND ( g.lang_id = $lang_id )";
+	}
+*/
 	if ( $group_tag ) {
 		$group_tag = like_escape( $wpdb->escape( $group_tag ) );
 		$group_tag = stripslashes($group_tag);
@@ -199,7 +231,6 @@ function gtags_make_tags( $urlencode=false, $exclude_tags='', $include_tags='' )
 		
 	}
 	
-	
 	if ( !$exclude_tags && !$include_tags ) { // get the defaults if nothing is set by the widget
 		$exclude_tags = get_option( 'gtags_exclude' );
 		$include_tags = get_option( 'gtags_include' );
@@ -227,6 +258,8 @@ function gtags_make_tags( $urlencode=false, $exclude_tags='', $include_tags='' )
 		$tags[ $tag ] = (object)array( 'name' => $tag, 'count' => $count, 'link' => $link );
 	}
 
+// error_log(print_r($tags,TRUE));
+
 	return $tags;
 }
 
@@ -235,8 +268,8 @@ function gtags_make_tags( $urlencode=false, $exclude_tags='', $include_tags='' )
 function gtags_display_tags() {
 
 	$gtags_dir_cloud = get_option('gtags_dir_cloud'); 
-	
-	if ( $gtags_dir_cloud=='show' || $gtags_dir_cloud=='link' || !$gtags_dir_cloud ){
+
+	if ( $gtags_dir_cloud=='show' || $gtags_dir_cloud=='link' || $gtags_dir_cloud=='eGroups' || !$gtags_dir_cloud ){
 		$hide_tag_style = 'link' == $gtags_dir_cloud ? ' style="display:none;" ' : '';
 				
 		echo '<div id="gtags-top">';
@@ -259,7 +292,7 @@ function gtags_cloud_args( $args = '' ) {
 	if ( !$args )
 		$args = get_option( 'gtags_cloud_args' );
 	
-	$defaults = array( 
+	$defaults = array(
 		'smallest' => 9, 
 		'largest' => 20, 
 		'number' => 36, 
@@ -269,7 +302,7 @@ function gtags_cloud_args( $args = '' ) {
 	);
 
 	$r =  wp_parse_args( $args, $defaults );
-	//echo '<pre style="background:white">'; print_r( $r ); echo '</pre>';
+	// cho '<pre style="background:white">'; print_r( $r ); echo '</pre>';
 	return $r;
 	//extract( $r ); // use this to pull out the values from the array into local variables
 }
@@ -463,7 +496,7 @@ class GTags_Widget extends WP_Widget {
 		echo '<div class="gtags gtags-widget">';
 		echo wp_generate_tag_cloud( gtags_make_tags( null, $instance['exclude'], $instance['include'] ), gtags_cloud_args() );
 		echo '</div>';
-		echo $after_widget;
+		echo $after_widget;	
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -669,7 +702,7 @@ function gtags_activity_for_item( $args ) {
 		?><div class="gtags-item-recent group">
 			<div class="gtags-item-avatar">
 				<a href="<?php echo bp_core_get_user_domain( $item['user_id'] ) ?>">
-					<?php echo bp_core_fetch_avatar( 'object=user&type=full&width=370&height=140&item_id=' . $item['user_id'] ) ?>
+					<?php echo bp_core_fetch_avatar( 'object=user&type=full&width=50&height=50&item_id=' . $item['user_id'] ) ?>
 				</a>
 			</div>
 			<div class="gtags-item-action">

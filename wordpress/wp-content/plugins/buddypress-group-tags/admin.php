@@ -49,6 +49,7 @@ function gtags_admin() {
 	<input type="radio" name="gtags_dir_cloud" value="never" <?php if ( get_option('gtags_dir_cloud')=='never' ) echo 'checked="checked"'; ?>> hidden<br>
 	<input type="radio" name="gtags_dir_cloud" value="link" <?php if ( get_option('gtags_dir_cloud')=='link' ) echo 'checked="checked"'; ?>> a link which expands when clicked<br>
 	<input type="radio" name="gtags_dir_cloud" value="show" <?php if ( get_option('gtags_dir_cloud')=='show' || !get_option('gtags_dir_cloud') ) echo 'checked="checked"'; ?>> always visible (default)<br>
+	<input type="radio" name="gtags_dir_cloud" value="eGroups" <?php if ( get_option('gtags_dir_cloud')=='eGroups' || !get_option('gtags_dir_cloud') ) echo 'checked="checked"'; ?>> eGroups style<br>
 	<br>
 	<input type="checkbox" value="true" name="gtags_show_in_dir_list" <?php if ( get_option('gtags_show_in_dir_list')=='true' ) echo 'checked="checked"'; ?>> <b>Show tags for each group in the group directory list</b> (off by default)<br><br>
 	
